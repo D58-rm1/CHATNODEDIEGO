@@ -1,0 +1,24 @@
+{
+  "name": "chatnodediego",
+  "version": "1.0.0",
+  "description": "chat en nodejs",
+  "homepage": "https://github.com/D58-rm1/CHATNODEDIEGO#readme",
+  "bugs": {
+    "url": "https://github.com/D58-rm1/CHATNODEDIEGO/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/D58-rm1/CHATNODEDIEGO.git"
+  },
+  "license": "ISC",
+  "author": "Diego RMz",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemo": "^1.0.0"
+  }
+}

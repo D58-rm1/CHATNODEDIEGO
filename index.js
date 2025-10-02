@@ -12,7 +12,7 @@ app.use(express.static('public'));
 var io = socket(server, {
     cors: {
         
-        origin: "https://chat-alexis-703.web.app", 
+        origin: "https://localhost:4000", 
         methods: ["GET", "POST"]
     }
 });

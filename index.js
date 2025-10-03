@@ -3,7 +3,12 @@ var socket = require('socket.io');
 
 var app = express();
 var server = app.listen(4000, function(){
-    console.log('Servidor corriendo en http://localhost:4000');
+    console.log('Servidor corriendo en http://0.0.0.0:4000');
+});
+// Configurar el servidor para escuchar en todas las interfaces de red
+const PORT = 4000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`);
 });
 
 app.use(express.static('public'));
@@ -12,7 +17,7 @@ app.use(express.static('public'));
 var io = socket(server, {
     cors: {
         
-        origin: "https://localhost:4000", 
+        origin: "https://0.0.0.0:4000", 
         methods: ["GET", "POST"]
     }
 });

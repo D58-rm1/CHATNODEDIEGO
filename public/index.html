@@ -1,30 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Practica de evaluacion Socket DIEGO RMz</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    <div id="panel-bienvenida">
-        <h2>Practica de evaluacion usando Sockets de comunicacion - Diego Rmz-</h2>
-        <input id="persona" type="text" placeholder="Ingresa tu nombre">
-        <button id="ingresar">Ingresar al chat</button>
-    </div>
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
 
-    <div id="app-chat" style="display:none;">
-        <h2>Practica de evaluacion 1er parcial - DIEGO Ramirez....</h2>
-        <h3 id="clase">DIEGO 703" </h3>
-        <div id="ventana-mensajes"></div>
-        <div id="output"></div> 
-        <div id="escribiendo-mensaje"></div>
-        <input id="usuario" type="text" placeholder="Tu nombre">
-        <input id="mensaje" type="text" placeholder="Ingresa un mensaje">
-        <button id="enviar">Enviar</button>
-    </div>
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
-    <script src="chat.js"></script>
-</body>
-</html>
+app.use(express.static('.')); // Sirve archivos estáticos (HTML, CSS, JS)
+
+io.on('connection', (socket) => {
+    console.log('Usuario conectado:', socket.id);
+
+    // Manejar mensajes de chat
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg); // Broadcast a todos
+    });
+
+    // Manejar typing
+    socket.on('typing', (data) => {
+        socket.broadcast.emit('typing', data); // Envía a todos excepto el emisor
+    });
+
+    socket.on('stop typing', (data) => {
+        socket.broadcast.emit('stop typing', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Usuario desconectado:', socket.id);
+    });
+});
+
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+

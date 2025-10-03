@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:4000');
+var socket = io.connect('http://0.0.0.0:4000');
 
 var persona = document.getElementById('persona'),
     ingresar = document.getElementById('ingresar'),
